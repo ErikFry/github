@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>Kan du gange?!</h1>
+ <!-- Her lager jeg strukturen på siden med div bokser.
+ Se i css for mer info -->
+  <div class="grid-container">
+    <div class="item1">
+      Her kan du øve deg på gangetabellen
+    </div>
+    <div class="item1">
+      <p>Lykke til!</p>
+      <p id="gangeStykke">Her vil regnestykket komme!</p>
+      <input type="text" id="svar" name="svar"></br>
+      <button id="svarKnapp" onclick="resultat()">Send svar </button>
+      <p></p>
+    </div>
+    <div class="item1" id="resultatDiv">
+      <p id="resultat">Klarer du dette?</p>
+    </div>
+    <script>
+      //variabeldeklarasjon
+      var stykkeEl = document.getElementById("gangeStykke");
+      var resultatEl = document.getElementById("resultat");
+      var startButtonEl = document.getElementById("startButton");
+      var resultatDivEl = document.getElementById("resultatDiv");
+      var svarEl = document.getElementById("svar");
+
+      var produkt = 0;
+      var streak = 0;
+
+      //Legger inn en listener for å sjekke om enter blir trykket i inputFeltet
+      svarEl.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          resultat();
+        }
+      });
+      //Selve funksjonen som henter ut regnestykket og svaret.
+      function spill() {
+        var tall1 = Math.floor(Math.random() * 12) + 1;
+        var tall2 = Math.floor(Math.random() * 12) + 1;
+        produkt = tall1 * tall2;
+        stykkeEl.innerHTML = "Hva er " + tall1 + " x " + tall2 + " ?";
+        svarEl.focus();
+        svarEl.select();
+      }
+      //funksjonen som tar inn svarer sammenligner og plotter ut svaret til bruker
+      function resultat() {
+        svar = svarEl.value;
+        if (svar == produkt) {
+          streak++;
+          resultatEl.innerHTML = "Gratulerer, du klarte det! <br> Du har nå klart " + streak + " på rad!";
+          resultatDivEl.style.backgroundColor = "#59CD90";
+          spill();
+        } else {
+          streak = 0;
+          resultatEl.innerHTML = "Det var desverre feil, prøv igjen!"
+          resultatDivEl.style.backgroundColor = "red";
+        }
+      }
+      spill();
+    </script>
+</body>
+
+</html>
